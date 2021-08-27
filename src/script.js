@@ -7,6 +7,7 @@ import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
 import { ARButton } from 'three/examples/jsm/webxr/ARButton.js'
 import floorVertexShader from './Shader/floorShader/vertex.glsl'
 import floorFragmentShader from './Shader/floorShader/fragment.glsl'
+import { Scene } from 'three'
 
 
 
@@ -119,7 +120,7 @@ gltfLoader.load(
 )
 
 // Floor
-const floorGeometry = new THREE.PlaneBufferGeometry(10, 10, 32, 32)
+const floorGeometry = new THREE.PlaneBufferGeometry(10, 10, 10, 10)
 const count = floorGeometry.attributes.position.count
 const randoms = new Float32Array(count)
 
@@ -223,6 +224,17 @@ const controls = new OrbitControls(camera, canvas)
 controls.target.set(0, 0.75, 0)
 controls.enableDamping = true
 
+//
+//ARscene
+//
+
+const initScene = () =>
+{
+   const geometry = sneaker
+   const Meshes = []
+}
+
+
 /**
  * Renderer
  */
@@ -240,8 +252,31 @@ renderer.toneMappingExposure = 1
 renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 renderer.setClearColor('#2B8940')
+
+/*
+* ARcontroller and render scene 
+*/
+
 renderer.xr.enabled = true; // New!
-container.appendChild(renderer.domElement);
+container.appendChild(renderer.domElement)
+
+let controller // controller
+
+function onSelect()
+{
+    const mesh = sneaker
+    mesh.position.set(0, 0,-1).applyMatrix4(controller.matrixWorld)
+    mesh.quaternion.setFromRotationMatrix(controller.matrixWorld)
+    Scene.add(mesh)
+    meshes.push(mesh)
+    
+}
+controller = renderer.xr.getController(0)
+controller.addEventListener('select',onSelect)
+scene.add(controller)
+
+renderer.setAnimationLoop()
+
 
 gui
  .add(renderer,'toneMapping',{
@@ -258,24 +293,21 @@ gui
 
 gui.add(renderer,'toneMappingExposure',0,5,0.1).name('Exposure')
 
+
+
 /**
  * AR session 
-
-
-const initScene = () =>
-{
-   const geometry =new THREE.BoxBufferGeometry(0.08,0.08,0.08)
-   const Meshes = []
-}
-
-const setupXR = () =>
-{
-    renderer.setAnimationLoop()
-}
 */
-
 // Add the AR button to the body of the DOM
 document.body.appendChild(ARButton.createButton(renderer));
+
+
+//const setupXR = () =>
+{
+   // renderer.setAnimationLoop()
+}
+
+
 
 
 /**
