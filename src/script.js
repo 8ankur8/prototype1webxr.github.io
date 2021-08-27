@@ -230,8 +230,8 @@ controls.enableDamping = true
 
 const initScene = () =>
 {
-   const geometry = sneaker
-   const Meshes = []
+   sneaker
+   const meshes = []
 }
 initScene()
 
