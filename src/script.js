@@ -99,7 +99,7 @@ gltfLoader.load(
     (gltf) =>
     {
         console.log(gltf)
-        gltf.scene.scale.set(0.06, 0.06, 0.06)
+        gltf.scene.scale.set(0.2, 0.2, 0.2)
         sneaker.add(gltf.scene)
         updateAllMaterial()
         /**
@@ -230,7 +230,6 @@ controls.enableDamping = true
 
 const initScene = () =>
 {
-   sneaker
    const meshes = []
 }
 initScene()
@@ -265,11 +264,10 @@ let controller // controller
 
 function onSelect()
 {
-    const mesh = sneaker
-    mesh.position.set(0, 0,-1).applyMatrix4(controller.matrixWorld)
-    mesh.quaternion.setFromRotationMatrix(controller.matrixWorld)
-    Scene.add(mesh)
-    meshes.push(mesh)
+    sneaker.position.set(0, 0,-1).applyMatrix4(controller.matrixWorld)
+    sneaker.quaternion.setFromRotationMatrix(controller.matrixWorld)
+    Scene.add(sneaker)
+    meshes.push(sneaker)
     
 }
 controller = renderer.xr.getController(0)
