@@ -99,7 +99,7 @@ gltfLoader.load(
     (gltf) =>
     {
         console.log(gltf)
-        //gltf.scene.scale.set(0.025, 0.025, 0.025)
+        gltf.scene.scale.set(0.06, 0.06, 0.06)
         sneaker.add(gltf.scene)
         updateAllMaterial()
         /**
@@ -233,6 +233,7 @@ const initScene = () =>
    const geometry = sneaker
    const Meshes = []
 }
+initScene()
 
 
 /**
@@ -251,7 +252,7 @@ renderer.toneMapping = THREE.ACESFilmicToneMapping
 renderer.toneMappingExposure = 1
 renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-renderer.setClearColor('#2B8940')
+//renderer.setClearColor('#2B8940')
 
 /*
 * ARcontroller and render scene 
