@@ -1,7 +1,6 @@
 import './style.css'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
-import * as dat from 'dat.gui'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
 import { ARButton } from 'three/examples/jsm/webxr/ARButton.js'
@@ -15,8 +14,7 @@ import { Scene } from 'three'
  * Base
  */
 // Debug
-const gui = new dat.GUI()
-gui.hide() = true
+
 const debugobject = {}
 
 // Canvas
@@ -72,10 +70,6 @@ environmentMapTexture.encoding = THREE.sRGBEncoding
 //scene.background =environmentMapTexture
 scene.environment = environmentMapTexture
 
-gui
- .add(debugobject,'envMapIntensity',0,10,0.1)
- .name('modellight')
- .onChange(updateAllMaterial)
 
 /**
  * Models
@@ -213,11 +207,8 @@ window.addEventListener('resize', () =>
  */
 // Base camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.01, 100)
-camera.position.set(1.8,0.7, 0.2)
+camera.position.set(1,0.7, 0.2)
 scene.add(camera)
-gui.add(camera.position,'x',-5,5,0.1).name('cameraX')
-gui.add(camera.position,'y',-5,5,0.1).name('cameraY')
-gui.add(camera.position,'z',-5,5,0.1).name('cameraZ')
 
 
 // Controls
@@ -278,36 +269,11 @@ scene.add(controller)
 renderer.setAnimationLoop()
 
 
-gui
- .add(renderer,'toneMapping',{
-   No:THREE.NoToneMapping,
-   linear:THREE.LinearToneMapping,
-   Reinhard: THREE.ReinhardToneMapping,
-   Cineon:THREE.CineonToneMapping,
-   ACESFilmic:THREE.ACESFilmicToneMapping
-   })
-   .onFinishChange(() =>{
-       renderer.toneMapping = Number(renderer.toneMapping)
-       updateAllMaterial()
-   }) 
-
-gui.add(renderer,'toneMappingExposure',0,5,0.1).name('Exposure')
-
-
-
 /**
  * AR session 
 */
 // Add the AR button to the body of the DOM
 document.body.appendChild(ARButton.createButton(renderer));
-
-
-//const setupXR = () =>
-{
-   // renderer.setAnimationLoop()
-}
-
-
 
 
 /**
