@@ -16,6 +16,7 @@ import { Scene } from 'three'
  */
 // Debug
 const gui = new dat.GUI()
+gui.hide() = true
 const debugobject = {}
 
 // Canvas
